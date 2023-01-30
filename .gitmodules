@@ -1,4 +1,1 @@
 
-[submodule "light_mappo"]
-	path = light_mappo
-	url = https://github.com/tinyzqh/light_mappo.git
