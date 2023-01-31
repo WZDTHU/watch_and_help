@@ -159,27 +159,44 @@ def build_graph(nodes, graph_class_names, max_node_length, graph_node_states):
 
 def gather_data(args):
     data_path = 'dataset/watch_data/gather_data_actiongraph_train.json'
+    # data_path = 'dataset/watch_data/mini_data_train.json'   # accelerate debug
     meta_data_path = 'dataset/watch_data/metadata.json'
-    data_path_new_test = 'dataset/watch_data/gather_data_actiongraph_new_test.json'
-    data_path_test = 'dataset/watch_data/gather_data_actiongraph_test.json'
+    # data_path_new_test = 'dataset/watch_data/gather_data_actiongraph_new_test.json'
+    data_path_new_test = 'dataset/watch_data/mini_data_new_test.json'
+    # data_path_test = 'dataset/watch_data/gather_data_actiongraph_test.json'
+    data_path_test = 'dataset/watch_data/mini_data_test.json'
 
     
     with open(data_path_new_test, 'r') as f:
         new_test_data = json.load(f)
-        new_test_data = new_test_data['new_test_data']
-    
+        new_test_data = new_test_data
+        # new_test_data = new_test_data['new_test_data']
+        # new_test_data = new_test_data['new_test_data'][0: 10]
+        # with open('mini_data_new_test.json', 'w') as f:
+        #     json.dump(new_test_data, f)
+        
+
     if os.path.exists(data_path):
         print('load gather_data, this may take a while...', data_path)
         with open(data_path_test, 'r') as f:
             data = json.load(f)
-            test_data = data['test_data']
+            test_data = data
+            # test_data = data['test_data']
+            # test_data = data['test_data'][0: 10]
+            # with open('mini_data_test.json', 'w') as f:
+            #     json.dump(test_data, f)
+        
 
         if args.inference:
             train_data = data['test_data']
         else:
             with open(data_path, 'r') as f:
                 data = json.load(f)
-            train_data = data['train_data']
+            train_data = data
+            # train_data = data['train_data']
+            # train_data = data['train_data'][0: 10]
+            # with open('mini_data_train.json', 'w') as f:
+            #     json.dump(train_data, f)
 
 
         with open(meta_data_path, 'r') as f:

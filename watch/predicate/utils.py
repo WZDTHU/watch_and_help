@@ -21,14 +21,14 @@ def grab_args():
     parser.add_argument('--verbose', type=str2bool, default=False)
     parser.add_argument('--debug', type=str2bool, default=False)
     parser.add_argument('--prefix', type=str, default='test')
-    parser.add_argument('--checkpoint', type=str, default=None)
+    parser.add_argument('--checkpoint', type=str, default='checkpoints')
     parser.add_argument('--n_workers', type=int, default=0)
     parser.add_argument('--train_iters', type=int, default=1e7)
-    parser.add_argument('--inputtype', type=str, default='actioninput')
+    parser.add_argument('--inputtype', type=str, default='graphinput') # this is whater matters, it has two values: graphinput and actioninput
     parser.add_argument('--resume', type=str, default='')
     parser.add_argument('--dropout', type=float, default=0)
     parser.add_argument('--inference', type=int, default=0)
-    parser.add_argument('--single', type=int, default=0)
+    parser.add_argument('--single', type=int, default=1)
 
     # model config
     parser.add_argument(
@@ -48,6 +48,7 @@ def grab_args():
         metavar='N',
         type=str,
         nargs='+',
+        default='0',
         help='specify the gpu id')
     parser.add_argument('--batch_size', type=int, default=2)
     parser.add_argument('--model_lr_rate', type=float, default=3e-4)

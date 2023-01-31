@@ -261,6 +261,11 @@ class Transformer(nn.Module):
     def forward(self, inputs, mask_nodes):
 
         mask_nodes = 1 - mask_nodes
+
+        print(inputs.shape)
+        print(inputs.transpose(0,1).shape)
+        print(mask_nodes.shape)
+
         outputs = self.transformer(inputs.transpose(0,1), src_key_padding_mask=mask_nodes.bool())
 
         outputs = outputs.squeeze(0).transpose(0,1)
@@ -340,24 +345,38 @@ class GraphDemoEncoder(nn.Module):
         states_objects = batch_graph_input['states_objects']
         mask_object = batch_graph_input['mask_object']
 
-        
+        # print(class_objects)
+        for demo in class_objects:
+            print(torch.stack(demo, 0).shape)
         stacked_demo_class_objects = [torch.stack(demo, 0) for demo in class_objects]
         stacked_demo_class_objects = torch.cat(stacked_demo_class_objects, 0)
+        print(stacked_demo_class_objects.shape)
 
+        for demo in object_coords:
+            print(torch.stack(demo, 0).shape)
         stacked_demo_object_coords = [torch.stack(demo, 0) for demo in object_coords]
         stacked_demo_object_coords = torch.cat(stacked_demo_object_coords, 0)
+        print(stacked_demo_object_coords.shape)
 
+        for demo in states_objects:
+            print(torch.stack(demo, 0).shape)
         stacked_demo_states_objects = [torch.stack(demo, 0) for demo in states_objects]
         stacked_demo_states_objects = torch.cat(stacked_demo_states_objects, 0)
+        print(stacked_demo_states_objects.shape)
 
+        for demo in mask_object:
+            print(torch.stack(demo, 0).shape)
         stacked_demo_mask_object = [torch.stack(demo, 0) for demo in mask_object]
         stacked_demo_mask_object = torch.cat(stacked_demo_mask_object, 0)
+        print(stacked_demo_mask_object.shape)
 
 
         input_node_embedding = self.single_object_encoding(stacked_demo_class_objects.long(),
                                                            stacked_demo_object_coords.float(),
                                                            stacked_demo_states_objects.float()).squeeze(1)
         
+        print(input_node_embedding.shape)
+
         stacked_demo_feat = self.main(input_node_embedding, stacked_demo_mask_object)
 
         ## average over nodes
